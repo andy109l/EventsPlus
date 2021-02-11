@@ -45,6 +45,6 @@ namespace EventsPlus.Models
 
         public PosCitCou PosCitCou { get; set; }
 
-        public ICollection<UserRegEvent> UserRegEvent { get; set; }
+        public ICollection<UserRegEvent> UserRegEvents { get; set; }
     }
 }

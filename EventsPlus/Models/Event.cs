@@ -49,8 +49,8 @@ namespace EventsPlus.Models
 
         public VenueAddress VenueAddress { get; set; }
 
-        public ICollection<GuestRegEvent> GuestRegEvent { get; set; }
+        public ICollection<GuestRegEvent> GuestRegEvents { get; set; }
 
-        public ICollection<UserRegEvent> UserRegEvent { get; set; }
+        public ICollection<UserRegEvent> UserRegEvents { get; set; }
     }
 }

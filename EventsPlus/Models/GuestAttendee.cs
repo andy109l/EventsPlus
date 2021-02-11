@@ -9,9 +9,10 @@ namespace EventsPlus.Models
 {
     public class GuestAttendee
     {
+        [Key]
         [Required]
         [Display(Name = "Guest Attendy ID")]
-        public int GeuestAttendyID { get; set; }
+        public int GuestAttendyId { get; set; }
 
         [Required]
         [RegularExpression(@"^[a-zA-Z\s]{1,30}$", ErrorMessage = " Up to 30 latin uppercase and lowercase characters are allowed.")]
@@ -57,6 +58,6 @@ namespace EventsPlus.Models
 
         public PosCitCou PosCitCou { get; set; }
 
-        public ICollection<GuestRegEvent> GuestRegEvent { get; set; }
+        public ICollection<GuestRegEvent> GuestRegEvents { get; set; }
     }
 }

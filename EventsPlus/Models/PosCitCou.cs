@@ -10,7 +10,7 @@ namespace EventsPlus.Models
     {
         [Key]
         [Display(Name = "Postcode ID")]
-        public int ID { get; set; }
+        public int PosCitCouId { get; set; }
 
         [Required]
         [StringLength(15)]
@@ -27,13 +27,13 @@ namespace EventsPlus.Models
         [Display(Name = "Country")]
         public string Country { get; set; }
 
-        public ICollection<Organizer> Organizer { get; set; }
+        public ICollection<Organizer> Organizers { get; set; }
 
-        public ICollection<User> User { get; set; }
+        public ICollection<User> Users { get; set; }
 
-        public ICollection<VenueAddress> VenueAddress { get; set; }
+        public ICollection<VenueAddress> VenueAddresses { get; set; }
 
-        public ICollection<GuestAttendee> GuestAttendee { get; set; }
+        public ICollection<GuestAttendee> GuestAttendees { get; set; }
 
 
     }

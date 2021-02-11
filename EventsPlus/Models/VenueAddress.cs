@@ -32,8 +32,10 @@ namespace EventsPlus.Models
         [Required]
         [StringLength(15)]
         [Display(Name = "Postcode ID")]
-        public int PosCitCouPostcode { get; set; }
+        public int PosCitCouID { get; set; }
 
         public PosCitCou PosCitCou { get; set; }
+
+        public ICollection<Event> Events { get; set; }
     }
 }

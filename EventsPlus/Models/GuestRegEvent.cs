@@ -20,7 +20,7 @@ namespace EventsPlus.Models
         [Display(Name = "Guest Attendy ID")]
         public int GeuestAttendyID { get; set; }
 
-        public GuestAttendee GuestAttendy { get; set; }
+        public GuestAttendee GuestAttendee { get; set; }
 
         [Display(Name = "Date of Registration")]
         public DateTime RegistrationTime { get; set; }

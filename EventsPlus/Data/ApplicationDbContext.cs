@@ -23,54 +23,56 @@ namespace EventsPlus.Data
         public DbSet<VenueAddress> VenueAddress { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.Organizer)
-                .WithOne()
+                .HasMany(p => p.Organizers)
+                .WithOne(b => b.PosCitCou)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.User)
-                .WithOne()
+                .HasMany(p => p.Users)
+                .WithOne(b => b.PosCitCou)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.VenueAddress)
-                .WithOne()
+                .HasMany(p => p.VenueAddresses)
+                .WithOne(b => b.PosCitCou)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.GuestAttendee)
-                .WithOne()
+                .HasMany(p => p.GuestAttendees)
+                .WithOne(b => b.PosCitCou)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Event>()
                 .HasOne(e => e.Organizer)
-                .WithMany()
+                .WithMany(a => a.Events)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Event>()
                 .HasOne(e => e.VenueAddress)
-                .WithMany()
+                .WithMany(a => a.Events)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Event>()
-                .HasMany(e => e.UserRegEvent)
-                .WithOne()
+                .HasMany(e => e.UserRegEvents)
+                .WithOne(a => a.Event)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Event>()
-                .HasMany(e => e.GuestRegEvent)
-                .WithOne()
+                .HasMany(e => e.GuestRegEvents)
+                .WithOne(a => a.Event)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(u => u.UserRegEvent)
-                .WithOne()
+                .HasMany(u => u.UserRegEvents)
+                .WithOne(n => n.User)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GuestAttendee>()
-                .HasMany(g => g.GuestRegEvent)
-                .WithOne()
+                .HasMany(g => g.GuestRegEvents)
+                .WithOne(h => h.GuestAttendee)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }
