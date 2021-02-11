@@ -4,22 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace EventsPlus.Models
 {
-    public class User : IdentityUser
+    public class VenueAddress
     {
-
-        [RegularExpression(@"^[a-zA-Z\s]{1,30}$", ErrorMessage = " Up to 30 latin uppercase and lowercase characters are allowed.")]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-
-        [Required]
-        [RegularExpression(@"^[a-zA-Z\s]{1,30}$", ErrorMessage = " Up to 30 latin uppercase and lowercase characters are allowed.")]
-        [Column("FirstName")]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        [Key]
+        public int ID { get; set; }
 
         [Required]
         [RegularExpression(@"[a-zA-Z\s\d]{1,40}$", ErrorMessage = " Up to 40 latin uppercase, lowercase and digit characters are allowed.")]
@@ -41,10 +32,8 @@ namespace EventsPlus.Models
         [Required]
         [StringLength(15)]
         [Display(Name = "Postcode ID")]
-        public string PosCitCouPostcode { get; set; }
+        public int PosCitCouPostcode { get; set; }
 
         public PosCitCou PosCitCou { get; set; }
-
-        public ICollection<UserRegEvent> UserRegEvent { get; set; }
     }
 }
