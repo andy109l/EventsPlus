@@ -10,16 +10,16 @@ namespace EventsPlus.Models
     public class UserRegEvent
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
+        [Required]
         [Display(Name = "Event ID")]
-        public int EventID { get; set; }
-
+        public int EventId { get; set; }
         public Event Event { get; set; }
 
+        [Required]
         [Display(Name = "User ID")]
-        public int UserID { get; set; }
-
+        public string UserId { get; set; }
         public User User { get; set; }
 
         [Display(Name = "Date of Registration")]

@@ -10,7 +10,7 @@ namespace EventsPlus.Models
     {
         [Key]
         [Display(Name = "Postcode ID")]
-        public int PosCitCouId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(15)]

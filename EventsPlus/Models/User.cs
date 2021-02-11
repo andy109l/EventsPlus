@@ -39,10 +39,8 @@ namespace EventsPlus.Models
         public string ContactAddressLine4 { get; set; }
 
         [Required]
-        [StringLength(15)]
         [Display(Name = "Postcode ID")]
-        public string PosCitCouPostcode { get; set; }
-
+        public int PosCitCouId{ get; set; }
         public PosCitCou PosCitCou { get; set; }
 
         public ICollection<UserRegEvent> UserRegEvents { get; set; }

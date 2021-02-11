@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EventsPlus.Data.Migrations
 {
-    public partial class VerificationMigrations : Migration
+    public partial class FixedVerificationMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -119,15 +119,15 @@ namespace EventsPlus.Data.Migrations
                     ContactAddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactAddressLine3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactAddressLine4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PosCitCouID = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    PosCitCouId = table.Column<int>(type: "int", nullable: true)
+                    PosCitCouId = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    PosCitCouId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organizer", x => x.OrganizerID);
                     table.ForeignKey(
-                        name: "FK_Organizer_PosCitCou_PosCitCouId",
-                        column: x => x.PosCitCouId,
+                        name: "FK_Organizer_PosCitCou_PosCitCouId1",
+                        column: x => x.PosCitCouId1,
                         principalTable: "PosCitCou",
                         principalColumn: "PosCitCouId",
                         onDelete: ReferentialAction.Restrict);
@@ -143,14 +143,15 @@ namespace EventsPlus.Data.Migrations
                     ContactAddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactAddressLine3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactAddressLine4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PosCitCouID = table.Column<int>(type: "int", maxLength: 15, nullable: false)
+                    VenPosCitCouID = table.Column<int>(type: "int", maxLength: 15, nullable: false),
+                    PosCitCouId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VenueAddress", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_VenueAddress_PosCitCou_PosCitCouID",
-                        column: x => x.PosCitCouID,
+                        name: "FK_VenueAddress_PosCitCou_PosCitCouId",
+                        column: x => x.PosCitCouId,
                         principalTable: "PosCitCou",
                         principalColumn: "PosCitCouId",
                         onDelete: ReferentialAction.Restrict);
@@ -195,9 +196,9 @@ namespace EventsPlus.Data.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EventsID = table.Column<int>(type: "int", nullable: false),
+                    Event1ID = table.Column<int>(type: "int", nullable: false),
                     EventID = table.Column<int>(type: "int", nullable: true),
-                    GeuestAttendyID = table.Column<int>(type: "int", nullable: false),
+                    GeuestAttendee1ID = table.Column<int>(type: "int", nullable: false),
                     GuestAttendeeGuestAttendyId = table.Column<int>(type: "int", nullable: true),
                     RegistrationTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -224,8 +225,9 @@ namespace EventsPlus.Data.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EventID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    Event1ID = table.Column<int>(type: "int", nullable: false),
+                    EventID = table.Column<int>(type: "int", nullable: true),
+                    User1ID = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     RegistrationTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -277,9 +279,9 @@ namespace EventsPlus.Data.Migrations
                 column: "GuestAttendeeGuestAttendyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Organizer_PosCitCouId",
+                name: "IX_Organizer_PosCitCouId1",
                 table: "Organizer",
-                column: "PosCitCouId");
+                column: "PosCitCouId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRegEvent_EventID",
@@ -292,9 +294,9 @@ namespace EventsPlus.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VenueAddress_PosCitCouID",
+                name: "IX_VenueAddress_PosCitCouId",
                 table: "VenueAddress",
-                column: "PosCitCouID");
+                column: "PosCitCouId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_PosCitCou_PosCitCouId",

@@ -12,12 +12,11 @@ namespace EventsPlus.Models
     {
         [Key]
         [Display(Name = "Event ID")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Organizer ID")]
-        public string OrganizerID { get; set; }
-
+        public int OrganizerId { get; set; }
         public Organizer Organizer { get; set; }
 
         [Required]
@@ -46,7 +45,6 @@ namespace EventsPlus.Models
         [Required]
         [Display(Name = "Venue Address ID")]
         public int VenueAddressID { get; set; }
-
         public VenueAddress VenueAddress { get; set; }
 
         public ICollection<GuestRegEvent> GuestRegEvents { get; set; }

@@ -10,7 +10,7 @@ namespace EventsPlus.Models
     public class Organizer
     {
         [Key]
-        public int OrganizerID { get; set; }
+        public int Id { get; set; }
 
         [RegularExpression(@"^[a-zA-Z\s]{1,30}$", ErrorMessage = " Up to 30 latin uppercase and lowercase characters are allowed.")]
         [StringLength(30)]
@@ -53,10 +53,8 @@ namespace EventsPlus.Models
         public string ContactAddressLine4 { get; set; }
 
         [Required]
-        [StringLength(15)]
         [Display(Name = "Postcode ID")]
-        public string PosCitCouID { get; set; }
-
+        public int PosCitCouId { get; set; }
         public PosCitCou PosCitCou { get; set; }
 
         public ICollection<Event> Events { get; set; }

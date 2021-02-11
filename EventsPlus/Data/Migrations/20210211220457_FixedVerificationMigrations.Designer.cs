@@ -4,14 +4,16 @@ using EventsPlus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EventsPlus.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210211220457_FixedVerificationMigrations")]
+    partial class FixedVerificationMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +23,7 @@ namespace EventsPlus.Data.Migrations
 
             modelBuilder.Entity("EventsPlus.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -35,20 +37,18 @@ namespace EventsPlus.Data.Migrations
                     b.Property<DateTime>("EventsStartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GuestRegEvent")
-                        .HasColumnType("int");
-
                     b.Property<int>("NumberOfAttendies")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrganizerId")
+                    b.Property<string>("OrganizerID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OrganizerID1")
                         .HasColumnType("int");
 
                     b.Property<bool>("PrivacySetting")
                         .HasColumnType("bit");
-
-                    b.Property<int>("UserRegEvent")
-                        .HasColumnType("int");
 
                     b.Property<int>("VenueAddressID")
                         .HasColumnType("int");
@@ -56,9 +56,9 @@ namespace EventsPlus.Data.Migrations
                     b.Property<bool>("VerifiedOnly")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("OrganizerId");
+                    b.HasIndex("OrganizerID1");
 
                     b.HasIndex("VenueAddressID");
 
@@ -67,7 +67,7 @@ namespace EventsPlus.Data.Migrations
 
             modelBuilder.Entity("EventsPlus.Models.GuestAttendee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GuestAttendyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -98,51 +98,54 @@ namespace EventsPlus.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("First Name");
 
-                    b.Property<int>("GuestRegEventId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PosCitCouId")
+                    b.Property<int>("PosCitCouID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("GuestAttendyId");
 
-                    b.HasIndex("PosCitCouId");
+                    b.HasIndex("PosCitCouID");
 
                     b.ToTable("GuestAttendee");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.GuestRegEvent", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EventId")
+                    b.Property<int>("Event1ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("GuestAttendeeId")
+                    b.Property<int?>("EventID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GeuestAttendee1ID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GuestAttendeeGuestAttendyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegistrationTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventID");
 
-                    b.HasIndex("GuestAttendeeId");
+                    b.HasIndex("GuestAttendeeGuestAttendyId");
 
                     b.ToTable("GuestRegEvent");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.Organizer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrganizerID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -159,9 +162,6 @@ namespace EventsPlus.Data.Migrations
 
                     b.Property<string>("ContactAddressLine4")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
 
                     b.Property<string>("OrganizerContactNumber")
                         .IsRequired()
@@ -182,19 +182,24 @@ namespace EventsPlus.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("PosCitCouId")
+                    b.Property<string>("PosCitCouId")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int?>("PosCitCouId1")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrganizerID");
 
-                    b.HasIndex("PosCitCouId");
+                    b.HasIndex("PosCitCouId1");
 
                     b.ToTable("Organizer");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.PosCitCou", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PosCitCouId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -207,48 +212,41 @@ namespace EventsPlus.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GuestAttendeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganizerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Postcode")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VenueAddressId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("PosCitCouId");
 
                     b.ToTable("PosCitCou");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.UserRegEvent", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EventId")
+                    b.Property<int>("Event1ID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EventID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegistrationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("User1ID")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventID");
 
                     b.HasIndex("UserId");
 
@@ -257,7 +255,7 @@ namespace EventsPlus.Data.Migrations
 
             modelBuilder.Entity("EventsPlus.Models.VenueAddress", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -275,10 +273,14 @@ namespace EventsPlus.Data.Migrations
                     b.Property<string>("ContactAddressLine4")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PosCitCouId")
+                    b.Property<int?>("PosCitCouId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("VenPosCitCouID")
+                        .HasMaxLength(15)
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("PosCitCouId");
 
@@ -516,11 +518,13 @@ namespace EventsPlus.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PosCitCouId")
+                    b.Property<int?>("PosCitCouId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserRegEventId")
-                        .HasColumnType("int");
+                    b.Property<string>("PosCitCouPostcode")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.HasIndex("PosCitCouId");
 
@@ -531,9 +535,8 @@ namespace EventsPlus.Data.Migrations
                 {
                     b.HasOne("EventsPlus.Models.Organizer", "Organizer")
                         .WithMany("Events")
-                        .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrganizerID1")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EventsPlus.Models.VenueAddress", "VenueAddress")
                         .WithMany("Events")
@@ -550,7 +553,7 @@ namespace EventsPlus.Data.Migrations
                 {
                     b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
                         .WithMany("GuestAttendees")
-                        .HasForeignKey("PosCitCouId")
+                        .HasForeignKey("PosCitCouID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -561,15 +564,13 @@ namespace EventsPlus.Data.Migrations
                 {
                     b.HasOne("EventsPlus.Models.Event", "Event")
                         .WithMany("GuestRegEvents")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EventsPlus.Models.GuestAttendee", "GuestAttendee")
                         .WithMany("GuestRegEvents")
-                        .HasForeignKey("GuestAttendeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GuestAttendeeGuestAttendyId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Event");
 
@@ -580,9 +581,8 @@ namespace EventsPlus.Data.Migrations
                 {
                     b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
                         .WithMany("Organizers")
-                        .HasForeignKey("PosCitCouId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("PosCitCouId1")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("PosCitCou");
                 });
@@ -591,15 +591,13 @@ namespace EventsPlus.Data.Migrations
                 {
                     b.HasOne("EventsPlus.Models.Event", "Event")
                         .WithMany("UserRegEvents")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EventsPlus.Models.User", "User")
                         .WithMany("UserRegEvents")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Event");
 
@@ -611,8 +609,7 @@ namespace EventsPlus.Data.Migrations
                     b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
                         .WithMany("VenueAddresses")
                         .HasForeignKey("PosCitCouId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("PosCitCou");
                 });
@@ -673,8 +670,7 @@ namespace EventsPlus.Data.Migrations
                     b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
                         .WithMany("Users")
                         .HasForeignKey("PosCitCouId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("PosCitCou");
                 });
