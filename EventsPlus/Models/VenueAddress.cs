@@ -30,10 +30,21 @@ namespace EventsPlus.Models
         public string ContactAddressLine4 { get; set; }
 
         [Required]
-        [Display(Name = "Postcode ID")]
-        public int PosCitCouId { get; set; }
-        public PosCitCou PosCitCou { get; set; }
+        [StringLength(15)]
+        [Display(Name = "Postcode")]
+        public string Postcode { get; set; }
+
+        [Required]
+        [RegularExpression(@"[a-zA-Z\s]{1,40}$", ErrorMessage = " Up to 20 latin uppercase and lowercase characters are allowed.")]
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Required]
+        [RegularExpression(@"[a-zA-Z\s]{1,40}$", ErrorMessage = " Up to 20 latin uppercase and lowercase characters are allowed.")]
+        [Display(Name = "Country")]
+        public string Country { get; set; }
 
         public ICollection<Event> Events { get; set; }
+
     }
 }

@@ -25,54 +25,19 @@ namespace EventsPlus.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.Organizers)
-                .WithOne(b => b.PosCitCou)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.Users)
-                .WithOne(b => b.PosCitCou)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.VenueAddresses)
-                .WithOne(b => b.PosCitCou)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<PosCitCou>()
-                .HasMany(p => p.GuestAttendees)
-                .WithOne(b => b.PosCitCou)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Event>()
                 .HasOne(e => e.Organizer)
                 .WithMany(a => a.Events)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Event>()
+                .HasMany(e => e.GuestAttendees)
+                .WithOne(a => a.Event)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Event>()
                 .HasOne(e => e.VenueAddress)
                 .WithMany(a => a.Events)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Event>()
-                .HasMany(e => e.UserRegEvents)
-                .WithOne(a => a.Event)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Event>()
-                .HasMany(e => e.GuestRegEvents)
-                .WithOne(a => a.Event)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.UserRegEvents)
-                .WithOne(n => n.User)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<GuestAttendee>()
-                .HasMany(g => g.GuestRegEvents)
-                .WithOne(h => h.GuestAttendee)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventsPlus.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210211220457_FixedVerificationMigrations")]
-    partial class FixedVerificationMigrations
+    [Migration("20210215163725_Migrationsv7")]
+    partial class Migrationsv7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace EventsPlus.Data.Migrations
 
             modelBuilder.Entity("EventsPlus.Models.Event", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -40,50 +40,33 @@ namespace EventsPlus.Data.Migrations
                     b.Property<int>("NumberOfAttendies")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrganizerID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OrganizerID1")
+                    b.Property<int>("OrganizerId")
                         .HasColumnType("int");
 
                     b.Property<bool>("PrivacySetting")
                         .HasColumnType("bit");
 
-                    b.Property<int>("VenueAddressID")
+                    b.Property<int>("VenueAddressId")
                         .HasColumnType("int");
 
                     b.Property<bool>("VerifiedOnly")
                         .HasColumnType("bit");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("OrganizerID1");
+                    b.HasIndex("OrganizerId");
 
-                    b.HasIndex("VenueAddressID");
+                    b.HasIndex("VenueAddressId");
 
                     b.ToTable("Event");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.GuestAttendee", b =>
                 {
-                    b.Property<int>("GuestAttendyId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContactAddressLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine4")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
@@ -92,6 +75,9 @@ namespace EventsPlus.Data.Migrations
                     b.Property<string>("EmailAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -102,66 +88,39 @@ namespace EventsPlus.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PosCitCouID")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("GuestAttendyId");
-
-                    b.HasIndex("PosCitCouID");
+                    b.HasIndex("EventId");
 
                     b.ToTable("GuestAttendee");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.GuestRegEvent", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Event1ID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EventID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GeuestAttendee1ID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GuestAttendeeGuestAttendyId")
+                    b.Property<int?>("GuestAttendeeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegistrationTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("EventID");
-
-                    b.HasIndex("GuestAttendeeGuestAttendyId");
+                    b.HasIndex("GuestAttendeeId");
 
                     b.ToTable("GuestRegEvent");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.Organizer", b =>
                 {
-                    b.Property<int>("OrganizerID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContactAddressLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine4")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrganizerContactNumber")
                         .IsRequired()
@@ -182,24 +141,14 @@ namespace EventsPlus.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("PosCitCouId")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int?>("PosCitCouId1")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrganizerID");
-
-                    b.HasIndex("PosCitCouId1");
+                    b.HasKey("Id");
 
                     b.ToTable("Organizer");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.PosCitCou", b =>
                 {
-                    b.Property<int>("PosCitCouId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -217,36 +166,25 @@ namespace EventsPlus.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("PosCitCouId");
+                    b.HasKey("Id");
 
                     b.ToTable("PosCitCou");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.UserRegEvent", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Event1ID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EventID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RegistrationTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("User1ID")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
-
-                    b.HasIndex("EventID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -255,10 +193,14 @@ namespace EventsPlus.Data.Migrations
 
             modelBuilder.Entity("EventsPlus.Models.VenueAddress", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactAddressLine1")
                         .IsRequired()
@@ -273,16 +215,16 @@ namespace EventsPlus.Data.Migrations
                     b.Property<string>("ContactAddressLine4")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PosCitCouId")
-                        .HasColumnType("int");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VenPosCitCouID")
+                    b.Property<string>("Postcode")
+                        .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("ID");
-
-                    b.HasIndex("PosCitCouId");
+                    b.HasKey("Id");
 
                     b.ToTable("VenueAddress");
                 });
@@ -497,19 +439,6 @@ namespace EventsPlus.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("ContactAddressLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactAddressLine4")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -518,16 +447,6 @@ namespace EventsPlus.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PosCitCouId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PosCitCouPostcode")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.HasIndex("PosCitCouId");
-
                     b.HasDiscriminator().HasValue("User");
                 });
 
@@ -535,12 +454,13 @@ namespace EventsPlus.Data.Migrations
                 {
                     b.HasOne("EventsPlus.Models.Organizer", "Organizer")
                         .WithMany("Events")
-                        .HasForeignKey("OrganizerID1")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EventsPlus.Models.VenueAddress", "VenueAddress")
                         .WithMany("Events")
-                        .HasForeignKey("VenueAddressID")
+                        .HasForeignKey("VenueAddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -551,67 +471,27 @@ namespace EventsPlus.Data.Migrations
 
             modelBuilder.Entity("EventsPlus.Models.GuestAttendee", b =>
                 {
-                    b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
+                    b.HasOne("EventsPlus.Models.Event", "Event")
                         .WithMany("GuestAttendees")
-                        .HasForeignKey("PosCitCouID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PosCitCou");
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.GuestRegEvent", b =>
                 {
-                    b.HasOne("EventsPlus.Models.Event", "Event")
+                    b.HasOne("EventsPlus.Models.GuestAttendee", null)
                         .WithMany("GuestRegEvents")
-                        .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EventsPlus.Models.GuestAttendee", "GuestAttendee")
-                        .WithMany("GuestRegEvents")
-                        .HasForeignKey("GuestAttendeeGuestAttendyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Event");
-
-                    b.Navigation("GuestAttendee");
-                });
-
-            modelBuilder.Entity("EventsPlus.Models.Organizer", b =>
-                {
-                    b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
-                        .WithMany("Organizers")
-                        .HasForeignKey("PosCitCouId1")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("PosCitCou");
+                        .HasForeignKey("GuestAttendeeId");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.UserRegEvent", b =>
                 {
-                    b.HasOne("EventsPlus.Models.Event", "Event")
+                    b.HasOne("EventsPlus.Models.User", null)
                         .WithMany("UserRegEvents")
-                        .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EventsPlus.Models.User", "User")
-                        .WithMany("UserRegEvents")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EventsPlus.Models.VenueAddress", b =>
-                {
-                    b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
-                        .WithMany("VenueAddresses")
-                        .HasForeignKey("PosCitCouId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("PosCitCou");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -665,21 +545,9 @@ namespace EventsPlus.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EventsPlus.Models.User", b =>
-                {
-                    b.HasOne("EventsPlus.Models.PosCitCou", "PosCitCou")
-                        .WithMany("Users")
-                        .HasForeignKey("PosCitCouId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("PosCitCou");
-                });
-
             modelBuilder.Entity("EventsPlus.Models.Event", b =>
                 {
-                    b.Navigation("GuestRegEvents");
-
-                    b.Navigation("UserRegEvents");
+                    b.Navigation("GuestAttendees");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.GuestAttendee", b =>
@@ -690,17 +558,6 @@ namespace EventsPlus.Data.Migrations
             modelBuilder.Entity("EventsPlus.Models.Organizer", b =>
                 {
                     b.Navigation("Events");
-                });
-
-            modelBuilder.Entity("EventsPlus.Models.PosCitCou", b =>
-                {
-                    b.Navigation("GuestAttendees");
-
-                    b.Navigation("Organizers");
-
-                    b.Navigation("Users");
-
-                    b.Navigation("VenueAddresses");
                 });
 
             modelBuilder.Entity("EventsPlus.Models.VenueAddress", b =>

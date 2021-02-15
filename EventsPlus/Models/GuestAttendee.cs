@@ -36,27 +36,10 @@ namespace EventsPlus.Models
         public string EmailAddress { get; set; }
 
         [Required]
-        [RegularExpression(@"[a-zA-Z\s\d]{1,40}$", ErrorMessage = " Up to 40 latin uppercase, lowercase and digit characters are allowed.")]
-        [Display(Name = "Contact Address Line 1")]
-        public string ContactAddressLine1 { get; set; }
+        [Display(Name = "Event ID")]
+        public int EventId { get; set; }
+        public Event Event { get; set; }
 
-        [RegularExpression(@"[a-zA-Z\s\d]{1,40}$", ErrorMessage = " Up to 40 latin uppercase, lowercase and digit characters are allowed.")]
-        [Display(Name = "Contact Address Line 2")]
-        public string ContactAddressLine2 { get; set; }
-
-        [RegularExpression(@"[a-zA-Z\s\d]{1,40}$", ErrorMessage = " Up to 40 latin uppercase, lowercase and digit characters are allowed.")]
-        [Display(Name = "Contact Address Line 3")]
-        public string ContactAddressLine3 { get; set; }
-
-        [RegularExpression(@"[a-zA-Z\s\d]{1,40}$", ErrorMessage = " Up to 40 latin uppercase, lowercase and digit characters are allowed.")]
-        [Display(Name = "Contact Address Line 4")]
-        public string ContactAddressLine4 { get; set; }
-
-        [Required]
-        [Display(Name = "Postcode ID")]
-        public int PosCitCouId { get; set; }
-        public PosCitCou PosCitCou { get; set; }
-
-        public ICollection<GuestRegEvent> GuestRegEvents { get; set; }
+         public ICollection<GuestRegEvent> GuestRegEvents { get; set; }
     }
 }

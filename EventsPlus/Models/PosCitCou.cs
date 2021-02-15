@@ -27,14 +27,6 @@ namespace EventsPlus.Models
         [Display(Name = "Country")]
         public string Country { get; set; }
 
-        public ICollection<Organizer> Organizers { get; set; }
-
-        public ICollection<User> Users { get; set; }
-
-        public ICollection<VenueAddress> VenueAddresses { get; set; }
-
-        public ICollection<GuestAttendee> GuestAttendees { get; set; }
-
 
     }
 }

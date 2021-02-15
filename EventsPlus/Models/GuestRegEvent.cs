@@ -12,16 +12,6 @@ namespace EventsPlus.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "Events ID")]
-        public int EventId { get; set; }
-        public Event Event { get; set; }
-
-        [Required]
-        [Display(Name = "Guest Attendee ID")]
-        public int GuestAttendeeId { get; set; }
-        public GuestAttendee GuestAttendee { get; set; }
-
         [Display(Name = "Date of Registration")]
         public DateTime RegistrationTime { get; set; }
 

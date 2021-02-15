@@ -43,12 +43,10 @@ namespace EventsPlus.Models
         public EventTypes EventType { get; set; }
 
         [Required]
-        [Display(Name = "Venue Address ID")]
-        public int VenueAddressID { get; set; }
+        [Display(Name = "Venue Id")]
+        public int VenueAddressId { get; set; }
         public VenueAddress VenueAddress { get; set; }
 
-        public ICollection<GuestRegEvent> GuestRegEvents { get; set; }
-
-        public ICollection<UserRegEvent> UserRegEvents { get; set; }
+        public ICollection<GuestAttendee> GuestAttendees { get; set; }
     }
 }
