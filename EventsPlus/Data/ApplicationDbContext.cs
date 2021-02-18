@@ -40,6 +40,13 @@ namespace EventsPlus.Data
                 .WithMany(a => a.Events)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Event>()
+                 .HasOne(e => e.EventType)
+                 .WithMany(a => a.Events)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+
         }
+        public DbSet<EventsPlus.Models.EventTypes> EventTypes { get; set; }
     } 
 }

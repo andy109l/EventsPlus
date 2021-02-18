@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using EventsPlus.Enums;
+
 
 namespace EventsPlus.Models
 {
@@ -40,6 +40,7 @@ namespace EventsPlus.Models
 
         [Required]
         [Display(Name = "Event Type")]
+        public int EventTypeId { get; set; }
         public EventTypes EventType { get; set; }
 
         [Required]
