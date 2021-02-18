@@ -1,0 +1,144 @@
+﻿@model EventsPlus.ViewModels.EventAttendees
+
+@{
+    ViewData["Title"] = "IndexSelected";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="IndexDefault">Back to Managment Page</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Event Id
+            </th>
+            <th>
+                Organizer
+            </th>
+            <th>
+             <a asp-action="IndexDefault" asp-route-sortOrder="@ViewData["DateStartSortParm"]">Events Start Time </a>
+            </th>
+            <th>
+              
+             <a asp-action="IndexDefault" asp-route-sortOrder="@ViewData["DateEndSortParm"]">Events End Time</a>
+            </th>
+            <th>
+                Number Of Attendies
+            </th>
+            <th>
+                Privacy Setting
+            </th>
+            <th>
+                Verified Only
+            </th>
+            <th>
+                <a asp-action="IndexDefault" asp-route-sortOrder="@ViewData["TypeSortParm"]"> Event Type</a>
+            </th>
+            <th>
+                Venue Address
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Events)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organizer.OrganizerContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventsStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventsStartEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfAttendies)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrivacySetting)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VerifiedOnly)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventType.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueAddress.City)
+            </td>
+            <td>
+                <a asp-action="IndexSelected" asp-route-id="@item.Id">See Attendees</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.GuestAttendees != null)
+{
+
+<h1>Selected Event Attedees</h1>
+
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Last Name
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Contact Number
+            </th>
+            <th>
+                Email Address
+            </th>
+            <th>
+                Event
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GuestAttendees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}

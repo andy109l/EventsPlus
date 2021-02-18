@@ -10,34 +10,47 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search : <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Organizer
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["EvId"]">Event Id</a>
             </th>
             <th>
-                Events Start Time
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["Organizer"]">Organizer</a>
             </th>
             <th>
-                Events End Time
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateStartSortParm"]">EventsStartTime</a>
             </th>
             <th>
-                Number Of Attendies
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateEndSortParm"]">EventsStartEnd</a>
             </th>
             <th>
-                Privacy Setting
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NumOfAttendees"]">Number Of Attendies </a>
             </th>
             <th>
-                Verified Only
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PrivSet"]">Privacy Setting </a>
+            </th>
+            <th></a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VerfOnl"]">Verified Only</a>
             </th>
             <th>
-                Event Type
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TypeSortParm"]">Event Type</a>
             </th>
             <th>
-                Venue Address
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TypeSortParm"]">VenueAddress</a>
+             </th>
+            <th>
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +58,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Organizer.OrganizerContactNumber)
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organizer.OrganizerLastName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EventsStartTime)
@@ -66,7 +82,7 @@
                     @Html.DisplayFor(modelItem => item.EventType.Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VenueAddress.City)
+                    @Html.DisplayFor(modelItem => item.VenueAddress.ContactAddressLine1)
                 </td>
                 <td>
                     <a asp-action="Index" asp-route-id="@item.Id">See Attendees</a> |
@@ -78,62 +94,60 @@
         }
     </tbody>
 </table>
-
 @if (Model.GuestAttendees != null)
 {
 
-<h1>Selected Event Attedees</h1>
+    <h1>Selected Event Attedees</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Last Name
-            </th>
-            <th>
-                First Name
-            </th>
-            <th>
-                Contact Number
-            </th>
-            <th>
-                Email Address
-            </th>
-            <th>
-                Event
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.GuestAttendees)
-        {
+    <p>
+    </p>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmailAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Event.Id)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Contact Number
+                </th>
+                <th>
+                    Email Address
+                </th>
+                <th>
+                    Event
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.GuestAttendees)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Event.Id)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

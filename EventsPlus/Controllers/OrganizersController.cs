@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventsPlus.Data;
 using EventsPlus.Models;
+using EventsPlus.ViewModels;
 
 namespace EventsPlus.Controllers
 {
@@ -20,13 +21,72 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Organizers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index_Deafalt()
         {
             return View(await _context.Organizer.ToListAsync());
+
+
+        }        // GET: Organizers
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
+        {
+            ViewData["OrgId"] = String.IsNullOrEmpty(sortOrder) ? "org_id" : "";
+            ViewData["OrgLNam"] = String.IsNullOrEmpty(sortOrder) ? "org_l_nam" : "";
+            ViewData["Org_F_Nam"] = String.IsNullOrEmpty(sortOrder) ? "org_f_nam": "";  
+            ViewData["Org_C_Num"] = String.IsNullOrEmpty(sortOrder) ? "org_c_num" : "";
+            ViewData["Org_E_Add"] = String.IsNullOrEmpty(sortOrder) ? "org_e_add" : "";
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentSort"] = sortOrder;
+
+            var organizer = from s in _context.Organizer
+                           select s;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                organizer = organizer.Where(s => s.OrganizerLastName.Contains(searchString)
+                                       || s.OrganizerFirstName.Contains(searchString)
+                                       || s.OrganizerContactNumber.Contains(searchString)
+                                       || s.OrganizerEmailAddress.Contains(searchString)
+                                       || s.Id.ToString().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "org_id":
+                    organizer = organizer.OrderByDescending(s => s.Id);
+                    break;
+                case "org_l_nam":
+                    organizer = organizer.OrderByDescending(s => s.OrganizerLastName);
+                    break;
+                case "org_f_nam":
+                    organizer = organizer.OrderByDescending(s => s.OrganizerFirstName);
+                    break;
+                case "org_c_num":
+                    organizer = organizer.OrderByDescending(s => s.OrganizerContactNumber);
+                    break;
+                case "org_e_add":
+                    organizer = organizer.OrderByDescending(s => s.OrganizerEmailAddress);
+                    break;
+           }
+
+
+            int pageSize = 3;
+            return View(await PaginatedList<Organizer>.CreateAsync(organizer.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: Organizers/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+            
+
+            // GET: Organizers/Details/5
+            public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
