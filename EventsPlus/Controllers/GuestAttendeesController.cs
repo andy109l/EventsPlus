@@ -20,10 +20,65 @@ namespace EventsPlus.Controllers
         }
 
         // GET: GuestAttendees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            var applicationDbContext = _context.GuestAttendee.Include(g => g.Event);
-            return View(await applicationDbContext.ToListAsync());
+            ViewData["AttId"] = String.IsNullOrEmpty(sortOrder) ? "att_id" : "";
+            ViewData["LNam"] = String.IsNullOrEmpty(sortOrder) ? "l_nam" : "";
+            ViewData["F_Nam"] = String.IsNullOrEmpty(sortOrder) ? "f_nam" : "";
+            ViewData["C_Num"] = String.IsNullOrEmpty(sortOrder) ? "c_num" : "";
+            ViewData["E_Add"] = String.IsNullOrEmpty(sortOrder) ? "e_add" : "";
+            ViewData["Ev_Id"] = String.IsNullOrEmpty(sortOrder) ? "ev_id" : "";
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentSort"] = sortOrder;
+
+
+            var guestattendee = from s in _context.GuestAttendee.Include(e => e.Event)
+                                select s;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                guestattendee = guestattendee.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString)
+                                       || s.ContactNumber.Contains(searchString)
+                                       || s.EmailAddress.Contains(searchString)
+                                       || s.Id.ToString().Contains(searchString)
+                                       || s.Event.Id.ToString().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "att_id":
+                    guestattendee = guestattendee.OrderByDescending(s => s.Id);
+                    break;
+                case "l_nam":
+                    guestattendee = guestattendee.OrderByDescending(s => s.LastName);
+                    break;
+                case "f_nam":
+                    guestattendee = guestattendee.OrderByDescending(s => s.FirstName);
+                    break;
+                case "c_num":
+                    guestattendee = guestattendee.OrderByDescending(s => s.ContactNumber);
+                    break;
+                case "e_add":
+                    guestattendee = guestattendee.OrderByDescending(s => s.EmailAddress);
+                    break;
+                case "ev_id":
+                    guestattendee = guestattendee.OrderByDescending(s => s.Event.Id);
+                    break;
+            }
+
+
+            int pageSize = 3;
+            return View(await PaginatedList<GuestAttendee>.CreateAsync(guestattendee.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: GuestAttendees/Details/5

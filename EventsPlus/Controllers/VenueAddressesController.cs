@@ -20,9 +20,73 @@ namespace EventsPlus.Controllers
         }
 
         // GET: VenueAddresses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            return View(await _context.VenueAddress.ToListAsync());
+            var venueaddress = from s in _context.VenueAddress
+                                select s;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["VenIdParm"] = String.IsNullOrEmpty(sortOrder) ? "ven_id_parm" : "";
+            ViewData["Con_Add_1Parm"] = String.IsNullOrEmpty(sortOrder) ? "con_add_1_parm" : "";
+            ViewData["Con_Add_2Parm"] = String.IsNullOrEmpty(sortOrder) ? "con_add_2_parm" : "";
+            ViewData["Con_Add_3Parm"] = String.IsNullOrEmpty(sortOrder) ? "con_add_3_parm" : "";
+            ViewData["Con_Add_4Parm"] = String.IsNullOrEmpty(sortOrder) ? "con_add_4_parm" : "";
+            ViewData["PostcodeParm"] = String.IsNullOrEmpty(sortOrder) ? "postcode_parm" : "";
+            ViewData["CityParm"] = String.IsNullOrEmpty(sortOrder) ? "city_parm" : "";
+            ViewData["CountParm"] = String.IsNullOrEmpty(sortOrder) ? "count_parm" : "";
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                venueaddress = venueaddress.Where(s => s.Id.ToString().Contains(searchString)
+                                       || s.ContactAddressLine1.Contains(searchString)
+                                       || s.ContactAddressLine2.Contains(searchString)
+                                       || s.ContactAddressLine3.Contains(searchString)
+                                       || s.ContactAddressLine4.Contains(searchString)
+                                       || s.Postcode.Contains(searchString)
+                                       || s.City.Contains(searchString)
+                                       || s.Country.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "ven_id_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.Id);
+                    break;
+                case "con_add_1_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.ContactAddressLine1);
+                    break;
+                case "con_add_2_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.ContactAddressLine2);
+                    break;
+                case "con_add_3_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.ContactAddressLine3);
+                    break;
+                case "con_add_4_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.ContactAddressLine4);
+                    break;
+                case "postcode_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.Postcode);
+                    break;
+                case "city_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.City);
+                    break;
+                case "count_parm":
+                    venueaddress = venueaddress.OrderByDescending(s => s.Country);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<VenueAddress>.CreateAsync(venueaddress.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: VenueAddresses/Details/5

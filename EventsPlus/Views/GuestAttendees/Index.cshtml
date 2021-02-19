@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventsPlus.Models.GuestAttendee>
+﻿@model PaginatedList<EventsPlus.Models.GuestAttendee>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,15 @@
 }
 
 <h1>Index</h1>
-
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -14,26 +22,33 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["AttId"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Guest Id</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LNam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Last Name</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContactNumber)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["F_Nam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Firs tName</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmailAddress)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["C_Num"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">  Contact Number</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["E_Add"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Email Address</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["Ev_Id"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Event Id</a>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
@@ -55,6 +70,25 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
