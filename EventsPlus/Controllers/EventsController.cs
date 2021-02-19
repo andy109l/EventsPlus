@@ -20,46 +20,6 @@ namespace EventsPlus.Controllers
             _context = context;
         }
 
-        // GET: Events
-        public async Task<IActionResult> Index_Original()
-        {
-            var applicationDbContext = _context.Event.Include(r => r.EventType).Include(p => p.Organizer).Include(g => g.VenueAddress);
-            return View(await applicationDbContext.ToListAsync());
-
-        }        // GET: Events
-        public async Task<IActionResult> IndexDeafault(string sortOrder, string searchString)
-        {
-            ViewData["TypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "event_type" : "";
-            ViewData["DateStartSortParm"] = sortOrder == "SDate" ? "sdate_desc" : "SDate";
-            ViewData["DateEndSortParm"] = sortOrder == "EDate" ? "edate_desc" : "EDate";
-            ViewData["CurrentFilter"] = searchString;
-            var Events = from s in _context.Event.Include(r => r.EventType).Include(p => p.Organizer).Include(g => g.VenueAddress)
-                           select s;
-
-            switch (sortOrder)
-            {
-                case "event_type":
-                    Events = Events.OrderByDescending(s => s.EventType.Type);
-                    break;
-                case "SDate":
-                    Events = Events.OrderBy(s => s.EventsStartTime);
-                    break;            
-                case "sdate_desc":
-                    Events = Events.OrderByDescending(s => s.EventsStartTime);
-                    break;
-                case "EDate":
-                    Events = Events.OrderBy(s => s.EventsStartEnd);
-                    break;
-                case "edate_desc":
-                    Events = Events.OrderByDescending(s => s.EventsStartEnd);
-                    break;               
-                default:
-                    Events = Events.OrderBy(s => s.Organizer.OrganizerContactNumber);
-                    break;
-
-            }
-            return View(await Events.AsNoTracking().ToListAsync());
-        }
         // GET: Events 
         public ViewResult Index(int? id, string sortOrder, string searchString, int? pageNumber)
         {
