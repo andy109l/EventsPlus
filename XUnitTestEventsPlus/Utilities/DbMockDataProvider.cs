@@ -54,6 +54,8 @@ namespace XUnitTestEventsPlus.Utilities
             };
         }
 
+
+
         public static List<Event> GetEventsData()
         {
             return new List<Event>
@@ -69,6 +71,22 @@ namespace XUnitTestEventsPlus.Utilities
                     VerifiedOnly = false,
                     EventTypeId = 1,
                     VenueAddressId = 1
+                }
+            };
+        }
+
+        public static List<GuestAttendee> GetGuestAttendeeData()
+        {
+            return new List<GuestAttendee>
+            {
+                new GuestAttendee
+                {
+                    Id = 1,
+                    LastName = "Lycan",
+                    FirstName = "Loyd",
+                    ContactNumber = "+447575324574",
+                    EmailAddress = "lysAnd@gmail.com",
+                    EventId = 1,
                 }
             };
         }

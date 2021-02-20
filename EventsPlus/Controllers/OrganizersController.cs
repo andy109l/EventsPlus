@@ -19,14 +19,8 @@ namespace EventsPlus.Controllers
         {
             _context = context;
         }
-
+        
         // GET: Organizers
-        public async Task<IActionResult> Index_Deafalt()
-        {
-            return View(await _context.Organizer.ToListAsync());
-
-
-        }        // GET: Organizers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["OrgId"] = String.IsNullOrEmpty(sortOrder) ? "org_id" : "";

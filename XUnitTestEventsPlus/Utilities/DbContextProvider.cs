@@ -23,6 +23,7 @@ namespace XUnitTestEventsPlus.Utilities
             dbContext.AddRange(DbMockDataProvider.GetVenueAddressData());
             dbContext.AddRange(DbMockDataProvider.GetEventTypeData());
             dbContext.AddRange(DbMockDataProvider.GetEventsData());
+            dbContext.AddRange(DbMockDataProvider.GetGuestAttendeeData());
 
             dbContext.SaveChanges();
 
