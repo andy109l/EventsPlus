@@ -54,13 +54,14 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+ position: relative;
+ min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
+   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: #e5fceb;
 }
 .footer {
   position: absolute;
@@ -69,3 +70,99 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*Customized CSS code for View*/
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+header + .container {
+    margin-top: 57px;    
+    background-color: #ffffff;
+}
+
+.navbar {
+    background-color: #8ed99f;
+    font-weight: bold;
+}
+
+.navbar-nav {
+    text-align: center;
+}
+
+.navbar-nav button {
+    width: 100%;
+    font-weight: bold;
+}
+
+.navbar-nav li {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.navbar-nav li:last-child {
+    margin-bottom: 8px
+}
+
+.navbar-nav li a {
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-nav li:hover,
+.navbar-nav li:focus {
+    background-color: #4e565e;
+}
+
+.navbar-nav li:hover a,
+.navbar-nav li:focus a,
+.navbar-nav li:hover button,
+.navbar-nav li:focus button {
+    color: #ffffff !important;
+}
+
+.navbar-top-container {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    width: 100%;
+    min-height: 57px;
+}
+
+.navbar-top-container .navbar-brand {
+    white-space: nowrap;
+}
+
+.navbar-top-container .nav-link {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: auto;
+}
+
+.navbar-top-container .nav-link + button  {
+    margin-left: 0;
+}
+
+.navbar-top-container button {
+    margin-left: auto;
+    background-color: #ffffff;
+}
+
+footer > .container {
+    background-color: #ffffff;
+}
+
+main {
+    min-height: calc(100vh - 117px);
+}
+
+table tr td,
+table tr th {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
