@@ -12,6 +12,10 @@ using XUnitTestEventsPlus.Utilities;
 
 namespace XUnitTestEventsPlus.Controllers
 {
+
+    /// <summary>
+    /// Unit test for the EventController, check if the method in controller behave as intended when you insert data into them and return correct data
+    /// </summary>
     public class EventsContollerTest : TestControllerBase
     {
 

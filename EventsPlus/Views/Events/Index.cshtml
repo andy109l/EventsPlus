@@ -5,11 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Creates the view for the Index page -->
+
 <h1>Index</h1>
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
+
+<!-- Adds the search box and utilizes the filter for the data in the table -->
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -19,6 +23,8 @@
         </p>
     </div>
 </form>
+
+<!-- Creates a responsive table with headers and utilizes the filtering logic specified in the controller -->
 <table class="table table-responsive">
     <thead>
         <tr>
@@ -40,7 +46,8 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["PrivSet"]">Privacy Setting </a>
             </th>
-            <th></a>
+            <th>
+                </a>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["VerfOnl"]">Verified Only</a>
             </th>
             <th>
@@ -48,11 +55,12 @@
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["TypeSortParm"]">VenueAddress</a>
-             </th>
+            </th>
             <th>
             </th>
         </tr>
     </thead>
+    <!-- Adds data to each column of the table -->
     <tbody>
         @foreach (var item in Model.Events)
         {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventsPlus.Models
 {
+
     public class Event
     {
         [Key]

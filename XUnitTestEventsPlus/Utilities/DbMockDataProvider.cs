@@ -7,6 +7,9 @@ using EventsPlus.Models;
 
 namespace XUnitTestEventsPlus.Utilities
 {
+    /// <summary>
+    /// Mocks the data in the database for the Unit tests
+    /// </summary>
     public class DbMockDataProvider
     {
         public static List<Organizer> GetOrganizersData()

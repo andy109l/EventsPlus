@@ -6,6 +6,9 @@ using EventsPlus.Models;
 
 namespace EventsPlus.ViewModels
 {
+    /// <summary>
+    /// Containter for multiple modles that could be used in a single views
+    /// </summary>
     public class EventAttendees
     {
         public IEnumerable<Event> Events { get; set; }

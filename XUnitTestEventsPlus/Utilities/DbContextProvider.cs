@@ -10,6 +10,10 @@ namespace XUnitTestEventsPlus.Utilities
 {
     class DbContextProvider
     {
+    /// <summary>
+    /// Provides the mocked DbContext for the Unit tests
+    /// </summary>
+    /// <returns></returns>
         public static ApplicationDbContext GetDbContext()
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()

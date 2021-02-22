@@ -6,8 +6,11 @@
 
 
 }
+<!-- Creates the view for the Index page -->
 
 <h1>Index</h1>
+
+<!-- Adds the search box and utilizes the filter for the data in the table-->
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -20,6 +23,8 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
+
+<!-- Creates a responsive table with headers and utilizes the filtering logic specified in the controller -->
 <table class="table table-responsive">
     <thead>
         <tr>
@@ -27,20 +32,21 @@
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["EvId"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer Id</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["OrgLNam"]"asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer Last Name</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["OrgLNam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer Last Name</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["Org_F_Nam"]"asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer First Name</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["Org_F_Nam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer First Name</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["Org_C_Num"]"asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer Contact Number</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["Org_C_Num"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer Contact Number</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["Org_E_Add"]"asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer Email Address</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["Org_E_Add"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> Organizer Email Address</a>
             </th>
             <th></th>
         </tr>
     </thead>
+    <!-- Adds data to each column of the table -->
     <tbody>
         @foreach (var item in Model)
         {
@@ -69,6 +75,8 @@
         }
     </tbody>
 </table>
+
+<!-- Utilizes the pagination logic and creates buttons to navigate through pages -->
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";

@@ -10,6 +10,9 @@ using Xunit;
 
 namespace XUnitTestEventsPlus.Controllers
 {
+    /// <summary>
+    /// Unit test for the OrganizerController, checks if the methods in the controller behave as intended when you insert data into them and return correct data
+    /// </summary>
     public class OrganizersControllerTest : TestControllerBase
     {
         [Fact]

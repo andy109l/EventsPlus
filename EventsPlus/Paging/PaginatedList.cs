@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventsPlus
 {
+    /// <summary>
+    /// Provides the pagination logic for the View
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PaginatedList<T> : List<T>
     {
         public int PageIndex { get; private set; }

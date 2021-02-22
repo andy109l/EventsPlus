@@ -26,6 +26,8 @@ namespace EventsPlus
         {
             using (var scope = host.Services.CreateScope())
             {
+
+            //Runs the Initialize method at the start of the progrma to check if the database was created, if not runs the DbInitializer
                 var services = scope.ServiceProvider;
                 try
                 {

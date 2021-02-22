@@ -13,6 +13,10 @@ namespace EventsPlus.Data
             : base(options)
         {
         }
+
+    /// <summary>
+    /// Binds the models to the DbSet
+    /// </summary>
         public DbSet<Event> Event { get; set; }
         public DbSet<GuestAttendee> GuestAttendee { get; set; }
         public DbSet<GuestRegEvent> GuestRegEvent { get; set; }
@@ -21,6 +25,11 @@ namespace EventsPlus.Data
         public DbSet<User> User { get; set; }
         public DbSet<UserRegEvent> UserRegEvent { get; set; }
         public DbSet<VenueAddress> VenueAddress { get; set; }
+
+    /// <summary>
+    /// Creates the relations between the tables
+    /// </summary>
+    /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

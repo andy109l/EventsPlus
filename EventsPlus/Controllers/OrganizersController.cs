@@ -19,10 +19,19 @@ namespace EventsPlus.Controllers
         {
             _context = context;
         }
-        
+
         // GET: Organizers
+        /// <summary>
+        /// Gets and returns the view of the models gets the required data from the database for them
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+        //Sorting filtering data and logic
             ViewData["OrgId"] = String.IsNullOrEmpty(sortOrder) ? "org_id" : "";
             ViewData["OrgLNam"] = String.IsNullOrEmpty(sortOrder) ? "org_l_nam" : "";
             ViewData["Org_F_Nam"] = String.IsNullOrEmpty(sortOrder) ? "org_f_nam": "";  
@@ -42,7 +51,7 @@ namespace EventsPlus.Controllers
             {
                 searchString = currentFilter;
             }
-
+        //Filtering loogic for the search box, filters the results
             if (!String.IsNullOrEmpty(searchString))
             {
                 organizer = organizer.Where(s => s.OrganizerLastName.Contains(searchString)
@@ -77,10 +86,15 @@ namespace EventsPlus.Controllers
         }
 
 
-            
 
-            // GET: Organizers/Details/5
-            public async Task<IActionResult> Details(int? id)
+
+        // GET: Organizers/Details/5
+        /// <summary>
+        /// Gets the required data from the database for the chosen record and displays the Details view for the chosen record in the table
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -98,6 +112,10 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Organizers/Create
+        /// <summary>
+        /// Displays the Create view for the Organizers
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
@@ -106,6 +124,12 @@ namespace EventsPlus.Controllers
         // POST: Organizers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Adds the newly created record to the database based in the bind property and the model, returns to the Inedx view
+        /// </summary>
+        /// <param name="organizer"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,OrganizerLastName,OrganizerFirstName,OrganizerContactNumber,OrganizerEmailAddress")] Organizer organizer)
@@ -120,6 +144,11 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Organizers/Edit/5
+        /// <summary>
+        /// Displays Edit form of the chosen Id, if the Id is not found returns Id not found
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -138,6 +167,13 @@ namespace EventsPlus.Controllers
         // POST: Organizers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Edits the chosen record in the Event table based on the Id, if the Id is not found returns not found, redirects to the Index view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="organizer"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,OrganizerLastName,OrganizerFirstName,OrganizerContactNumber,OrganizerEmailAddress")] Organizer organizer)
@@ -171,6 +207,11 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Organizers/Delete/5
+        /// <summary>
+        /// Displays a delete dox for the chosen record in the table based on the Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -189,6 +230,11 @@ namespace EventsPlus.Controllers
         }
 
         // POST: Organizers/Delete/5
+        /// <summary>
+        /// Performs the delete action of the chosen record in the database and returns the Index View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

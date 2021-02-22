@@ -20,8 +20,17 @@ namespace EventsPlus.Controllers
         }
 
         // GET: GuestAttendees
+        /// <summary>
+        /// Gets and returns the view of the models gets the required data from the database for them
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+        //Sorting filtering data and logic
             ViewData["AttId"] = String.IsNullOrEmpty(sortOrder) ? "att_id" : "";
             ViewData["LNam"] = String.IsNullOrEmpty(sortOrder) ? "l_nam" : "";
             ViewData["F_Nam"] = String.IsNullOrEmpty(sortOrder) ? "f_nam" : "";
@@ -43,7 +52,7 @@ namespace EventsPlus.Controllers
             {
                 searchString = currentFilter;
             }
-
+        //Filtering loogic for the search box, filters the results
             if (!String.IsNullOrEmpty(searchString))
             {
                 guestattendee = guestattendee.Where(s => s.LastName.Contains(searchString)
@@ -82,6 +91,11 @@ namespace EventsPlus.Controllers
         }
 
         // GET: GuestAttendees/Details/5
+        /// <summary>
+        /// Gets the required data from the databse for the chosen record and displays the Details view for the chosen record in the table
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -101,6 +115,10 @@ namespace EventsPlus.Controllers
         }
 
         // GET: GuestAttendees/Create
+        /// <summary>
+        /// Displays the Create view for the GuestAttendees
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id");
@@ -110,6 +128,11 @@ namespace EventsPlus.Controllers
         // POST: GuestAttendees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Adds the newly created record to the database based in the bind property and the model, returns to the Inedx view
+        /// </summary>
+        /// <param name="guestAttendee"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,LastName,FirstName,ContactNumber,EmailAddress,EventId")] GuestAttendee guestAttendee)
@@ -120,11 +143,17 @@ namespace EventsPlus.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            //Gets Ids and one mor property to be displayed and used in the drop down list.
             ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id", guestAttendee.EventId);
             return View(guestAttendee);
         }
 
         // GET: GuestAttendees/Edit/5
+        /// <summary>
+        /// Displays Edit form of the chosen Id, if the Id is not found returns Id not found
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -137,6 +166,7 @@ namespace EventsPlus.Controllers
             {
                 return NotFound();
             }
+            //Gets Ids and one mor property to be displayed and used in the drop down list
             ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id", guestAttendee.EventId);
             return View(guestAttendee);
         }
@@ -144,6 +174,12 @@ namespace EventsPlus.Controllers
         // POST: GuestAttendees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Edits the chosen record in the Event table based on the Id, if the Id is not found returns not found, redirects to the Index view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="guestAttendee"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,LastName,FirstName,ContactNumber,EmailAddress,EventId")] GuestAttendee guestAttendee)
@@ -173,11 +209,17 @@ namespace EventsPlus.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            //Gets Ids and one mor property to be displayed and used in the drop down list
             ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id", guestAttendee.EventId);
             return View(guestAttendee);
         }
 
         // GET: GuestAttendees/Delete/5
+        /// <summary>
+        /// Displays a delete dox for the chosen record in the table based on the Id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -197,6 +239,11 @@ namespace EventsPlus.Controllers
         }
 
         // POST: GuestAttendees/Delete/5
+        /// <summary>
+        /// Performs the delete action of the chosen record in the database and returns the Index View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

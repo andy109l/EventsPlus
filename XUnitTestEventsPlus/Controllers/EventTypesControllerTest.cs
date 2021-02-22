@@ -10,6 +10,9 @@ using Xunit;
 
 namespace XUnitTestEventsPlus.Controllers
 {
+    /// <summary>
+    /// Unit test for the EventTypesController, checks if the methods the in controller behave as intended when you insert data into them and return correct data
+    /// </summary>
     public class EventTypesControllerTest : TestControllerBase
     {
 

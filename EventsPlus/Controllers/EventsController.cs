@@ -21,6 +21,15 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Events 
+
+        /// <summary>
+        /// Gets and returns the view of the models gets the required data from the database for them
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="sortOrder"></param>
+        /// <param name="searchString"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public ViewResult Index(int? id, string sortOrder, string searchString, int? pageNumber)
         {
 
@@ -33,6 +42,7 @@ namespace EventsPlus.Controllers
                 .Include(p => p.GuestAttendees)
                 .OrderBy(p => p.EventType);
 
+
             if (id != null)
             {
                 ViewBag.Id = id.Value;
@@ -40,7 +50,7 @@ namespace EventsPlus.Controllers
             }
             var Events = from s in _context.Event.Include(r => r.EventType).Include(p => p.Organizer).Include(g => g.VenueAddress)
                          select s;
-
+        //Sorting filtering data and logic
             ViewData["CurrentSort"] = sortOrder;
             ViewData["TypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "event_type" : "";
             ViewData["DateStartSortParm"] = sortOrder == "SDate" ? "sdate_desc" : "SDate";
@@ -53,7 +63,7 @@ namespace EventsPlus.Controllers
             ViewData["DateEndSortParm"] = sortOrder == "EDate" ? "edate_desc" : "EDate";
             ViewData["CurrentFilter"] = searchString;
 
-
+        //Filtering loogic for the search box, filters the results
             if (!String.IsNullOrEmpty(searchString))
             {
                 viewModel.Events = viewModel.Events.Where(s => s.EventType.Type.Contains(searchString)
@@ -111,6 +121,12 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Events/Details/5
+
+        /// <summary>
+        /// Gets the required data from the database for the chosen record and displays the Details view for the chosen record in the table
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -132,8 +148,14 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Events/Create
+        /// <summary>
+        /// Displays the Create view for the Event
+        /// </summary>
+        /// <returns></returns>
+
         public IActionResult Create()
         {
+        //Gets Ids and one mor property to be displayed and used in the drop down list
             ViewData["EventTypeId"] = new SelectList(_context.EventTypes, "Id", "Type");
             ViewData["OrganizerId"] = new SelectList(_context.Organizer, "Id", "OrganizerLastName");
             ViewData["VenueAddressId"] = new SelectList(_context.VenueAddress, "Id", "ContactAddressLine1");
@@ -143,6 +165,11 @@ namespace EventsPlus.Controllers
         // POST: Events/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Binds the values to the model adds the record to the database, returns to the Inedx view
+        /// </summary>
+        /// <param name="event"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,OrganizerId,EventsStartTime,EventsStartEnd,NumberOfAttendies,PrivacySetting,VerifiedOnly,EventTypeId,VenueAddressId")] Event @event)
@@ -153,6 +180,7 @@ namespace EventsPlus.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+        //Gets Ids and one mor property to be displayed and used in the drop down list.
             ViewData["EventTypeId"] = new SelectList(_context.EventTypes, "Id", "Type", @event.EventTypeId);
             ViewData["OrganizerId"] = new SelectList(_context.Organizer, "Id", "OrganizerLastName", @event.OrganizerId);
             ViewData["VenueAddressId"] = new SelectList(_context.VenueAddress, "Id", "ContactAddressLine1", @event.VenueAddressId);
@@ -160,6 +188,12 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Events/Edit/5
+
+        /// <summary>
+        /// Displays Edit form of the chosen Id, if the Id is not found returns Id not found
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -172,6 +206,8 @@ namespace EventsPlus.Controllers
             {
                 return NotFound();
             }
+
+        //Gets Ids and one mor property to be displayed and used in the drop down list
             ViewData["EventTypeId"] = new SelectList(_context.EventTypes, "Id", "Type", @event.EventTypeId);
             ViewData["OrganizerId"] = new SelectList(_context.Organizer, "Id", "OrganizerLastName", @event.OrganizerId);
             ViewData["VenueAddressId"] = new SelectList(_context.VenueAddress, "Id", "ContactAddressLine1", @event.VenueAddressId);
@@ -181,6 +217,13 @@ namespace EventsPlus.Controllers
         // POST: Events/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Edits the chosen record in the Event table based on the Id, if the Id is not found returns not found, redirects to the Index view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="event"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,OrganizerId,EventsStartTime,EventsStartEnd,NumberOfAttendies,PrivacySetting,VerifiedOnly,EventTypeId,VenueAddressId")] Event @event)
@@ -210,6 +253,7 @@ namespace EventsPlus.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            //Gets Ids and one mor property to be displayed and used in the drop down list
             ViewData["EventTypeId"] = new SelectList(_context.EventTypes, "Id", "Type", @event.EventTypeId);
             ViewData["OrganizerId"] = new SelectList(_context.Organizer, "Id", "OrganizerLastName", @event.OrganizerId);
             ViewData["VenueAddressId"] = new SelectList(_context.VenueAddress, "Id", "ContactAddressLine1", @event.VenueAddressId);
@@ -217,6 +261,11 @@ namespace EventsPlus.Controllers
         }
 
         // GET: Events/Delete/5
+        /// <summary>
+        /// Displays a delete box for the chosen record in the table based on the Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -238,6 +287,11 @@ namespace EventsPlus.Controllers
         }
 
         // POST: Events/Delete/5
+        /// <summary>
+        /// Performs the delete action of the chosen record in the database and returns the Index View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
